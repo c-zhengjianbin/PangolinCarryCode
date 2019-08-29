@@ -6,7 +6,7 @@ import lombok.Data;
 public class ${className} {
 
 <#list properties as pro>
-    private ${pro.className} ${pro.fieldName}
+    private ${pro.className} <@convertJavaField>${pro.fieldName}</@convertJavaField>
 </#list>
 
 }

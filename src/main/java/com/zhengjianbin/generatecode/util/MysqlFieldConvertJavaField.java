@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by zhengjianbin on 2019/8/29.
  */
-public class LowerFirstCharacter implements TemplateDirectiveModel {
+public class MysqlFieldConvertJavaField implements TemplateDirectiveModel {
 
     @Override
     public void execute(Environment env, Map params, TemplateModel[] loopVars,

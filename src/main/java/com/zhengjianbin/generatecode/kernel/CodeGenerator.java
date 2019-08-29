@@ -1,9 +1,7 @@
 package com.zhengjianbin.generatecode.kernel;
 
 import com.zhengjianbin.generatecode.util.FileUtils;
-import com.zhengjianbin.generatecode.util.LowerFirstCharacter;
-import com.zhengjianbin.generatecode.util.PropertyDeal;
-import com.zhengjianbin.generatecode.util.UpperFirstCharacter;
+import com.zhengjianbin.generatecode.util.MysqlFieldConvertJavaField;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -35,9 +33,7 @@ public class CodeGenerator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        cfg.setSharedVariable("upperFC", new UpperFirstCharacter()); //添加一个"宏"共享变量用来将属性名首字母大写
-        cfg.setSharedVariable("propertyDeal", new PropertyDeal()); //添加一个"宏"共享变量用来将属性名首字母大写
-        cfg.setSharedVariable("lowerFC", new LowerFirstCharacter());
+        cfg.setSharedVariable("convertJavaField", new MysqlFieldConvertJavaField());
     }
 
     public void generateModelFile(Map templateParameters, String templateFileName) throws IOException, TemplateException {
