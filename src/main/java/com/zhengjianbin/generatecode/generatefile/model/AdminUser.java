@@ -1,4 +1,4 @@
-package  com.zhengjianbin.generatecode.testfile.model;
+package  com.zhengjianbin.generatecode.generatefile.model;
 
 import lombok.Data;
 import java.util.Date;

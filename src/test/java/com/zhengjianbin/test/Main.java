@@ -5,21 +5,111 @@ import com.zhengjianbin.generatecode.mysql.MySQLConnect;
 import com.zhengjianbin.generatecode.util.Constants;
 import com.zhengjianbin.generatecode.util.StrUtils;
 import freemarker.template.TemplateException;
+import org.mybatis.generator.api.MyBatisGenerator;
+import org.mybatis.generator.config.*;
+import org.mybatis.generator.config.xml.ConfigurationParser;
+import org.mybatis.generator.exception.InvalidConfigurationException;
+import org.mybatis.generator.exception.XMLParserException;
+import org.mybatis.generator.internal.DefaultShellCallback;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by zhengjianbin on 2019/8/29.
  */
 public class Main {
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException, TemplateException {
+    public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException, TemplateException, InterruptedException, InvalidConfigurationException, XMLParserException {
 
+        //生成MyBatis 相关类
+        List<String> warnings = new ArrayList<String>();
+        boolean overwrite = true;
+        Configuration config = new Configuration();
+        Context context = new Context(null);
+        context.setId("DB2Tables");
+        context.setTargetRuntime("MyBatis3");
+
+        //数据库连接
+        JDBCConnectionConfiguration jdbcConnectionConfiguration = new JDBCConnectionConfiguration();
+        jdbcConnectionConfiguration.setDriverClass("com.mysql.jdbc.Driver");
+        jdbcConnectionConfiguration.setConnectionURL("jdbc:mysql://localhost:3306/risk-management");
+        jdbcConnectionConfiguration.setUserId("root");
+        jdbcConnectionConfiguration.setPassword("123456789");
+        context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
+
+        //commentGenerator 配置
+        CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
+        commentGeneratorConfiguration.addProperty("suppressAllComments", "true");
+        context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);
+        //javaTypeResolverConfiguration 配置
+        JavaTypeResolverConfiguration javaTypeResolverConfiguration = new JavaTypeResolverConfiguration();
+        javaTypeResolverConfiguration.addProperty("forceBigDecimals","false");
+        context.setJavaTypeResolverConfiguration(javaTypeResolverConfiguration);
+        //javamodel 相关配置
+        JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
+        String javaTargetPackage = "com.elens.data.oauth.dao.client.mybatis.domain";
+        String javaTargetProject = "/Users/zhengjianbin/Desktop/automybatis/generator/src";
+        javaModelGeneratorConfiguration.setTargetPackage(javaTargetPackage);
+        javaModelGeneratorConfiguration.setTargetProject(javaTargetProject);
+        javaModelGeneratorConfiguration.addProperty("enableSubPackages","true");
+        javaModelGeneratorConfiguration.addProperty("trimStrings","true");
+        context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
+        //sqlMap相关配置
+        SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
+        String sqlTargetPackage = "com.elens.data.oauth.dao.client.mybatis.mapper";
+        String sqlTargetProject = "/Users/zhengjianbin/Desktop/automybatis/generator/src";
+        sqlMapGeneratorConfiguration.setTargetPackage(sqlTargetPackage);
+        sqlMapGeneratorConfiguration.setTargetProject(sqlTargetProject);
+        sqlMapGeneratorConfiguration.addProperty("enableSubPackages","true");
+        context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
+        //javaClient 相关配置
+        JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
+        String javaClientTargetPackge = "com.elens.data.oauth.dao.client.mybatis.mapper";
+        String javaClientProjectPackge = "/Users/zhengjianbin/Desktop/automybatis/generator/src";
+        javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
+        javaClientGeneratorConfiguration.setTargetProject(javaClientProjectPackge);
+        javaClientGeneratorConfiguration.setTargetPackage(javaClientTargetPackge);
+        javaClientGeneratorConfiguration.addProperty("enableSubPackages", "true");
+        context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
+        //table 配置
+        TableConfiguration tableConfiguration = new TableConfiguration(context);
+        tableConfiguration.setTableName("identification_record");
+        tableConfiguration.setDomainObjectName("IdentificationRecord");
+        tableConfiguration.setCountByExampleStatementEnabled(false);
+        tableConfiguration.setUpdateByExampleStatementEnabled(false);
+        tableConfiguration.setDeleteByExampleStatementEnabled(false);
+        tableConfiguration.setSelectByExampleStatementEnabled(false);
+        tableConfiguration.setSelectByExampleStatementEnabled(false);
+        context.addTableConfiguration(tableConfiguration);
+        //添加上下文
+        config.addContext(context);
+        /**
+         * 注意：生成代码目录为：/Users/zhengjianbin/Desktop/automybatis/generator/src ，
+         * 如果不存在src 目录，不会报错提示。需手动创建
+         *
+         */
+        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+        myBatisGenerator.generate(null);
+
+
+//        List<String> warnings = new ArrayList<String>();
+//        boolean overwrite = true;
+//        File configFile = new File("/Users/zhengjianbin/Desktop/automybatis/generator/generator.xml");
+//        ConfigurationParser cp = new ConfigurationParser(warnings);
+//        Configuration config  = cp.parseConfiguration(configFile);
+//        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+//        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
+//        myBatisGenerator.generate(null);
+
+        //生成Model、Service、Impl 类
+        //generateJavaCode();
+    }
+
+    private static void generateJavaCode() throws ClassNotFoundException, SQLException, TemplateException, IOException {
         String templateDirPath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/template/";
         String outCodeFilePath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/testfile";
         String mysqlUri = "jdbc:mysql://localhost:3306/risk-management";

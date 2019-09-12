@@ -1,6 +1,6 @@
-package  com.zhengjianbin.generatecode.testfile.service;
+package  com.zhengjianbin.generatecode.generatefile.service;
 
-import com.zhengjianbin.generatecode.testfile.model.AdminUser;
+import com.zhengjianbin.generatecode.generatefile.model.AdminUser;
 import java.util.List;
 
 public interface AdminUserService {

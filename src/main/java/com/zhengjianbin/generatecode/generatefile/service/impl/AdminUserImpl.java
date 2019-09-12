@@ -1,7 +1,7 @@
-package  com.zhengjianbin.generatecode.testfile.service.impl;
+package  com.zhengjianbin.generatecode.generatefile.service.impl;
 
-import com.zhengjianbin.generatecode.testfile.model.AdminUser;
-import com.zhengjianbin.generatecode.testfile.service.AdminUserService;
+import com.zhengjianbin.generatecode.generatefile.model.AdminUser;
+import com.zhengjianbin.generatecode.generatefile.service.AdminUserService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

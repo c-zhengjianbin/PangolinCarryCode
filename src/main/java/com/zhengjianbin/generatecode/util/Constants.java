@@ -17,11 +17,11 @@ public class Constants {
 
     public static final String TEMPLATE_SERVICE_IMPL_FILE_NAME = "ServiceImpl.ftl";
 
-    public static final String MODEL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.testfile.model";
+    public static final String MODEL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.model";
 
-    public static final String SERVICE_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.testfile.service";
+    public static final String SERVICE_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.service";
 
-    public static final String SERVICE_IMPL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.testfile.service.impl";
+    public static final String SERVICE_IMPL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.service.impl";
 
 
 }
