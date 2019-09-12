@@ -1,4 +1,4 @@
-package com.zhengjianbin.generatecode.field;
+package com.zhengjianbin.generatecode.mysql;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,33 +7,40 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by zhengjianbin on 2019/8/29.
+ * Created by zhengjianbin on 2019/9/12.
  */
-public class FieldGenerator {
+public class MySQLConnect {
 
-    private String mysqlUrl;
-    private String mysqlUser;
-    private String mysqlPwd;
+    private String uri;
+    private String userName;
+    private String pwd;
     private Map<String,String> classTypeMap = new HashMap<>();
 
-    public FieldGenerator(String mysqlUrl, String mysqlUser, String mysqlPwd) {
-        this.mysqlUrl = mysqlUrl;
-        this.mysqlUser = mysqlUser;
-        this.mysqlPwd = mysqlPwd;
+
+    public MySQLConnect(String uri, String userName, String pwd) {
+        this.uri = uri;
+        this.userName = userName;
+        this.pwd = pwd;
         classTypeMap.put("java.lang.Integer", "Integer");
         classTypeMap.put("java.lang.String", "String");
-        classTypeMap.put("java.sql.Timestamp", "Timestamp");
+        classTypeMap.put("java.sql.Timestamp", "Date");
         classTypeMap.put("java.lang.Long", "Long");
     }
 
     public Connection getConn() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection(mysqlUrl, mysqlUser, mysqlPwd);
+        return DriverManager.getConnection(uri, userName, pwd);
     }
 
+    /**
+     * @author : zhengjianbin
+     * @version: 1.0
+     * @time : 2019/9/12 - 10:40 AM
+     * @Param :
+     * @function : 获取对应表对应的Java 字段
+     */
     public List<Map<String, String>> getField(String tableName) throws SQLException, ClassNotFoundException {
         List<Map<String, String>> fields = new ArrayList<>();
-
         Connection conn = getConn();
         String sql = "select * from " + tableName;
         PreparedStatement stmt = null;
@@ -60,3 +67,4 @@ public class FieldGenerator {
     }
 
 }
+

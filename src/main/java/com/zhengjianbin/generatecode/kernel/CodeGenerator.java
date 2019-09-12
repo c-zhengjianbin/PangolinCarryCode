@@ -13,7 +13,11 @@ import java.io.OutputStreamWriter;
 import java.util.Map;
 
 /**
- * Created by zhengjianbin on 2019/8/29.
+ * @author : zhengjianbin
+ * @version: 1.0
+ * @time : 2019/9/12 - 10:32 AM
+ * @Param :
+ * @function : 代码生成类
  */
 public class CodeGenerator {
 
@@ -22,6 +26,12 @@ public class CodeGenerator {
     private String templateDirPath;
 
     private String outFileBasePath;
+
+    private String modelFilePath;
+
+    private String serviceFilePath;
+
+    private String ControllerFilePath;
 
     public CodeGenerator(String templatePathDir, String outFileBasePath) {
         this.templateDirPath = templatePathDir;
@@ -36,11 +46,21 @@ public class CodeGenerator {
         cfg.setSharedVariable("convertJavaField", new MysqlFieldConvertJavaField());
     }
 
-    public void generateModelFile(Map templateParameters, String templateFileName) throws IOException, TemplateException {
+    /**
+     * @author : zhengjianbin
+     * @version: 1.0
+     * @time : 2019/9/12 - 10:32 AM
+     * @Param : templateParameters - 模板所需的参数
+     *          templateFileName   - 模板名称，例如：ModelDto.ftl
+     *          templateType - 模板类型，例如：model,service
+     *          generatePath - 生成文件相对路径，例如：controller，server/impl
+     * @function : 生成指定模板代码
+     */
+    public void generateModelFile(Map templateParameters, String templateFileName, String templateType, String generatePath) throws IOException, TemplateException {
         Template template = cfg.getTemplate(templateFileName);
-        String modelPath = outFileBasePath + File.separator + "model" + File.separator;
-        FileUtils.checkAndMkdir(modelPath);
-        String filePath = modelPath + templateParameters.get("className").toString() + ".java";
+        String generateFilePath = outFileBasePath + File.separator + generatePath + File.separator;
+        FileUtils.checkAndMkdir(generateFilePath);
+        String filePath = generateFilePath + templateParameters.get("className").toString() + ".java";
         FileOutputStream fos = new FileOutputStream(new File(filePath));
         template.process(templateParameters, new OutputStreamWriter(fos, "utf-8"));
         fos.flush();
