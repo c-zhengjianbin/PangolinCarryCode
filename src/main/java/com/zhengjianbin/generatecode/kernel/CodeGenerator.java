@@ -56,7 +56,8 @@ public class CodeGenerator {
      *          generatePath - 生成文件相对路径，例如：controller，server/impl
      * @function : 生成指定模板代码
      */
-    public void generateModelFile(Map templateParameters, String templateFileName, String templateType, String generatePath) throws IOException, TemplateException {
+    public void generateModelFile(Map templateParameters, String templateFileName,
+                                  String generatePath) throws IOException, TemplateException {
         Template template = cfg.getTemplate(templateFileName);
         String generateFilePath = outFileBasePath + File.separator + generatePath + File.separator;
         FileUtils.checkAndMkdir(generateFilePath);

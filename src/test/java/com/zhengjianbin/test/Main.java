@@ -45,18 +45,36 @@ public class Main {
         modelPara.put("className", className);
         modelPara.put("properties", dbTableField);
         //generate template code
-        generateCode.generateModelFile(modelPara, Constants.TEMPLATE_MODEL_FILE_NAME,
-                Constants.MODEL, Constants.MODEL);
+        generateCode.generateModelFile(modelPara,
+                Constants.TEMPLATE_MODEL_FILE_NAME,
+                Constants.MODEL);
 
         //load service template parameter
         Map servicePara = new HashMap();
-        servicePara.put("className", className+"Service");
+        String serviceClassName = className+"Service";
+        servicePara.put("className", serviceClassName);
         servicePara.put("modelClassName", className);
         servicePara.put("classVariateName", StrUtils.javaClassNameConvertVariate(className));
         servicePara.put("servicePackageName", Constants.SERVICE_BEAN_PACKAGE_NAME);
         servicePara.put("modelPackageName", Constants.MODEL_BEAN_PACKAGE_NAME+"."+className);
-        generateCode.generateModelFile(servicePara, Constants.TEMPLATE_SERVICE_FILE_NAME,
-                Constants.SERVICE, Constants.SERVICE);
+        generateCode.generateModelFile(servicePara,
+                Constants.TEMPLATE_SERVICE_FILE_NAME,
+                Constants.SERVICE);
+
+        //load serviceImpl template parameter
+        Map serviceImplPara = new HashMap();
+        serviceImplPara.put("className", className+"Impl");
+        serviceImplPara.put("modelClassName", className);
+        serviceImplPara.put("classVariateName", StrUtils.javaClassNameConvertVariate(className));
+        serviceImplPara.put("serviceClassName", serviceClassName);
+        serviceImplPara.put("serviceImplPackageName", Constants.SERVICE_IMPL_BEAN_PACKAGE_NAME);
+        serviceImplPara.put("modelPackageName", Constants.MODEL_BEAN_PACKAGE_NAME+"."+className);
+        serviceImplPara.put("servicePackageName", Constants.SERVICE_BEAN_PACKAGE_NAME +"."+serviceClassName);
+        generateCode.generateModelFile(serviceImplPara,
+                Constants.TEMPLATE_SERVICE_IMPL_FILE_NAME,
+                Constants.SERVICE_IMPL);
+
+
     }
 
 }
