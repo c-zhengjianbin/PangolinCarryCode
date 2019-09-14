@@ -16,9 +16,11 @@
          
 * ### ☘️使用方式(正在完善中......)     
      
+     
 * ### ☘️TODO🌴    
-     * 不使用Mybatis 插件方式生成JavaDTO。
+     * 该用Free Marker方式，生成JavaDto。而不是使用Mybatis 插件。
      * 对于路径错误进行相关测试。
+     * 完成从Mapper、MapperInterface、Dto、Service、Impl整体流程的测试。
      * 完成使用方式的文档编写
      
 * ### ☘️项目结构
