@@ -14,7 +14,7 @@ public class ${className} implements ${serviceClassName} {
     }
 
     @Override
-    public void delete(Long id){
+    public void delete(${keyIdClass} id){
 
     }
 
@@ -24,7 +24,7 @@ public class ${className} implements ${serviceClassName} {
     }
 
     @Override
-    public ${modelClassName} get${modelClassName}ById(Long id){
+    public ${modelClassName} getOneById(${keyIdClass} id){
 
         return null;
     }

@@ -7,11 +7,11 @@ public interface ${className} {
 
     void save(${modelClassName} ${classVariateName});
 
-    void delete(Long id);
+    void delete(${keyIdClass} id);
 
     void modify(${modelClassName} ${classVariateName});
 
-    ${modelClassName} get${modelClassName}ById(Long id);
+    ${modelClassName} getOneById(${keyIdClass} id);
 
     List<${modelClassName}> listObjects(${modelClassName} ${classVariateName});
 

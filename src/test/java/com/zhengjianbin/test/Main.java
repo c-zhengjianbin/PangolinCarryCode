@@ -8,12 +8,9 @@ import com.zhengjianbin.generatecode.util.StrUtils;
 import freemarker.template.TemplateException;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.*;
-import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.DefaultShellCallback;
-
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
@@ -24,6 +21,13 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException, TemplateException, InterruptedException, InvalidConfigurationException, XMLParserException {
+
+
+        //生成Model、Service、Impl 类
+        generateJavaCode();
+    }
+
+    private static void generateMybatisCodeNew() throws InterruptedException, SQLException, InvalidConfigurationException, IOException {
         String uri = "jdbc:mysql://localhost:3306/risk-management";
         String userName = "root";
         String pwd = "123456789";
@@ -36,24 +40,11 @@ public class Main {
         MyBatisConfiguration myBatisConfiguration = new MyBatisConfiguration(uri, userName, pwd, javaDtoPackage,
                 javaSqlPackage,mapperInterfacePacke, tables, fileOutSrcDir);
         myBatisConfiguration.generateMyBatisCode();
-
-
-//        List<String> warnings = new ArrayList<String>();
-//        boolean overwrite = true;
-//        File configFile = new File("/Users/zhengjianbin/Desktop/automybatis/generator/generator.xml");
-//        ConfigurationParser cp = new ConfigurationParser(warnings);
-//        Configuration config  = cp.parseConfiguration(configFile);
-//        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-//        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
-//        myBatisGenerator.generate(null);
-
-        //生成Model、Service、Impl 类
-        //generateJavaCode();
     }
 
     private static void generateJavaCode() throws ClassNotFoundException, SQLException, TemplateException, IOException {
         String templateDirPath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/template/";
-        String outCodeFilePath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/testfile";
+        String outCodeFilePath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/generatefile";
         String mysqlUri = "jdbc:mysql://localhost:3306/risk-management";
         String mysqlUserName = "root";
         String mysqlPwd = "123456789";
@@ -68,8 +59,10 @@ public class Main {
     private static void generateCode(MySQLConnect mySQLConnect, CodeGenerator generateCode) throws SQLException, ClassNotFoundException, IOException, TemplateException {
         String tableName = "admin_user";
         String className = StrUtils.tableConvertJavaClassName(tableName);
+        Map<Object, Object> dbTableFieldInfo = mySQLConnect.getField(tableName);
         //table field convert java field
-        List<Map<String, String>> dbTableField = mySQLConnect.getField(tableName);
+        List<Map<String, String>> dbTableField = (List<Map<String, String>>) dbTableFieldInfo.get("fields");
+        String primaryKeyClass = (String) dbTableFieldInfo.get("primaryKeyType");
 
         //load model template file parameter
         Map modelPara = new HashMap();
@@ -86,6 +79,7 @@ public class Main {
         String serviceClassName = className+"Service";
         servicePara.put("className", serviceClassName);
         servicePara.put("modelClassName", className);
+        servicePara.put("keyIdClass", primaryKeyClass);
         servicePara.put("classVariateName", StrUtils.javaClassNameConvertVariate(className));
         servicePara.put("servicePackageName", Constants.SERVICE_BEAN_PACKAGE_NAME);
         servicePara.put("modelPackageName", Constants.MODEL_BEAN_PACKAGE_NAME+"."+className);
@@ -95,10 +89,12 @@ public class Main {
 
         //load serviceImpl template parameter
         Map serviceImplPara = new HashMap();
+        String modelClassVariateName = StrUtils.javaClassNameConvertVariate(className);
         serviceImplPara.put("className", className+"Impl");
         serviceImplPara.put("modelClassName", className);
-        serviceImplPara.put("classVariateName", StrUtils.javaClassNameConvertVariate(className));
+        serviceImplPara.put("classVariateName", modelClassVariateName);
         serviceImplPara.put("serviceClassName", serviceClassName);
+        serviceImplPara.put("keyIdClass", primaryKeyClass);
         serviceImplPara.put("serviceImplPackageName", Constants.SERVICE_IMPL_BEAN_PACKAGE_NAME);
         serviceImplPara.put("modelPackageName", Constants.MODEL_BEAN_PACKAGE_NAME+"."+className);
         serviceImplPara.put("servicePackageName", Constants.SERVICE_BEAN_PACKAGE_NAME +"."+serviceClassName);
@@ -106,12 +102,25 @@ public class Main {
                 Constants.TEMPLATE_SERVICE_IMPL_FILE_NAME,
                 Constants.SERVICE_IMPL);
 
-
+        //load serviceImpl template parameter
+        Map controllerPara = new HashMap();
+        controllerPara.put("className", className+"Controller");
+        controllerPara.put("modelClassName", className);
+        controllerPara.put("classVariateName", modelClassVariateName);
+        controllerPara.put("serviceClassName", serviceClassName);
+        controllerPara.put("serviceClassVariateName", StrUtils.javaClassNameConvertVariate(serviceClassName));
+        controllerPara.put("keyIdClass", primaryKeyClass);
+        controllerPara.put("modelPackageName", Constants.MODEL_BEAN_PACKAGE_NAME+"."+className);
+        controllerPara.put("servicePackageName", Constants.SERVICE_BEAN_PACKAGE_NAME +"."+serviceClassName);
+        controllerPara.put("controllerPackageName", Constants.CONTROLLER_BEAN_PACKAGE_NAME);
+        controllerPara.put("wrapPackageName", Constants.WRAPPER_BEAN_PACKAGE_NAME);
+        generateCode.generateModelFile(controllerPara,
+                Constants.TEMPLATE_CONTROLLER_FILE_NAME,
+                Constants.CONTROLLER);
     }
 
-
-
-    public void generateMybatisCode() throws InvalidConfigurationException, InterruptedException, SQLException, IOException {
+    @Deprecated
+    public void generateMybatisCodeOld() throws InvalidConfigurationException, InterruptedException, SQLException, IOException {
         //生成MyBatis 相关类
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;

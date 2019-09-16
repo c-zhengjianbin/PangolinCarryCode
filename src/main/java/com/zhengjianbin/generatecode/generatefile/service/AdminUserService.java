@@ -7,11 +7,11 @@ public interface AdminUserService {
 
     void save(AdminUser adminUser);
 
-    void delete(Long id);
+    void delete(Integer id);
 
     void modify(AdminUser adminUser);
 
-    AdminUser getAdminUserById(Long id);
+    AdminUser getOneById(Integer id);
 
     List<AdminUser> listObjects(AdminUser adminUser);
 

@@ -14,7 +14,7 @@ public class AdminUserImpl implements AdminUserService {
     }
 
     @Override
-    public void delete(Long id){
+    public void delete(Integer id){
 
     }
 
@@ -24,7 +24,7 @@ public class AdminUserImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUser getAdminUserById(Long id){
+    public AdminUser getOneById(Integer id){
 
         return null;
     }

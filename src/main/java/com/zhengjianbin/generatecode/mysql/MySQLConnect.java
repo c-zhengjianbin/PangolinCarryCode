@@ -39,23 +39,32 @@ public class MySQLConnect {
      * @Param :
      * @function : 获取对应表对应的Java 字段
      */
-    public List<Map<String, String>> getField(String tableName) throws SQLException, ClassNotFoundException {
+    public Map<Object, Object> getField(String tableName) throws SQLException, ClassNotFoundException {
         List<Map<String, String>> fields = new ArrayList<>();
+        Map result = new HashMap();
         Connection conn = getConn();
         String sql = "select * from " + tableName;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        String primaryKeyColumns= "";
+        String primaryKeyType = "";
         try {
             stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery(sql);
             ResultSetMetaData data = rs.getMetaData();
             ResultSet pkSet = conn.getMetaData().getPrimaryKeys(null, null, tableName);
+
+            while(pkSet.next()) {
+                primaryKeyColumns = pkSet.getObject(4).toString();
+            }
             ResultSet columnSet = conn.getMetaData().getColumns(null, "", tableName, "%");
             for(int i = 1; i <= columnSet.getMetaData().getColumnCount(); i++){
-                System.out.println(i);
                 Map<String, String> field = new HashMap<>();
                 String columnName = data.getColumnName(i);
                 String columnClassName = data.getColumnClassName(i);
+                if(columnName.equals(primaryKeyColumns)){
+                    primaryKeyType = classTypeMap.get(columnClassName);
+                }
                 field.put("className", classTypeMap.get(columnClassName));
                 field.put("fieldName", columnName);
                 fields.add(field);
@@ -63,7 +72,9 @@ public class MySQLConnect {
         }catch (Exception e){
 
         }
-        return fields;
+        result.put("fields", fields);
+        result.put("primaryKeyType",primaryKeyType);
+        return result;
     }
 
 }
