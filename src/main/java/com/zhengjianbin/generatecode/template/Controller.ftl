@@ -62,7 +62,7 @@ public class ${className} {
     public Result queryUser(@RequestBody(required = false) ${modelClassName} ${classVariateName}) {
         try {
             PageInfo<${modelClassName}> pageInfo =new PageInfo<>(${serviceClassVariateName}.listObjects(${classVariateName}));
-            return ResultWrap.wrap(Result.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, pageInfo);
+            return ResultWrap.wrap(Result.SUCCESS_CODE, Result.SUCCESS_MESSAGE, pageInfo);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultWrap.wrap(Result.ERROR_CODE, e.getMessage());
