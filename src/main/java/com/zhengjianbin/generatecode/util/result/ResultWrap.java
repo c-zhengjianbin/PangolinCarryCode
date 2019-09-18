@@ -5,12 +5,12 @@ import com.github.pagehelper.Page;
 /**
  * Created by zhengjianbin on 2019/7/31.
  */
-public class WrapMapper {
+public class ResultWrap {
 
     /**
      * Instantiates a new base mapper.
      */
-    private WrapMapper() {
+    private ResultWrap() {
     }
 
     /**
@@ -26,8 +26,8 @@ public class WrapMapper {
      *            the o
      * @return the wrapper
      */
-    public static <E> Wrapper<E> wrap(int code, String message, E o, Page<E> page) {
-        return new Wrapper<E>(code, message, o, page);
+    public static <E> Result<E> wrap(int code, String message, E o, Page<E> page) {
+        return new Result<E>(code, message, o, page);
     }
 
     /**
@@ -43,8 +43,8 @@ public class WrapMapper {
      *            the o
      * @return the wrapper
      */
-    public static <E> Wrapper<E> wrap(int code, String message, E o) {
-        return new Wrapper<E>(code, message, o);
+    public static <E> Result<E> wrap(int code, String message, E o) {
+        return new Result<E>(code, message, o);
     }
 
     /**
@@ -58,8 +58,8 @@ public class WrapMapper {
      *            the message
      * @return the wrapper
      */
-    public static <E> Wrapper<E> wrap(int code, String message) {
-        return new Wrapper<E>(code, message);
+    public static <E> Result<E> wrap(int code, String message) {
+        return new Result<E>(code, message);
     }
 
     /**
@@ -71,7 +71,7 @@ public class WrapMapper {
      *            the code
      * @return the wrapper< e>
      */
-    public static <E> Wrapper<E> wrap(int code) {
+    public static <E> Result<E> wrap(int code) {
         return wrap(code, null);
     }
 
@@ -84,8 +84,8 @@ public class WrapMapper {
      *            the e
      * @return the wrapper
      */
-    public static <E> Wrapper<E> wrap(Exception e) {
-        return new Wrapper<E>(Wrapper.ERROR_CODE, e.getMessage());
+    public static <E> Result<E> wrap(Exception e) {
+        return new Result<E>(Result.ERROR_CODE, e.getMessage());
     }
 
     /**
@@ -97,7 +97,7 @@ public class WrapMapper {
      *            the wrapper
      * @return the e
      */
-    public static <E> E unWrap(Wrapper<E> wrapper) {
+    public static <E> E unWrap(Result<E> wrapper) {
         return wrapper.getResult();
     }
 
@@ -108,8 +108,8 @@ public class WrapMapper {
      *            the element type
      * @return the wrapper< e>
      */
-    public static <E> Wrapper<E> illegalArgument() {
-        return wrap(Wrapper.ILLEGAL_ARGUMENT_CODE_, Wrapper.ILLEGAL_ARGUMENT_MESSAGE);
+    public static <E> Result<E> illegalArgument() {
+        return wrap(Result.ILLEGAL_ARGUMENT_CODE_, Result.ILLEGAL_ARGUMENT_MESSAGE);
     }
 
     /**
@@ -119,8 +119,8 @@ public class WrapMapper {
      *            the element type
      * @return the wrapper< e>
      */
-    public static <E> Wrapper<E> error() {
-        return wrap(Wrapper.ERROR_CODE, Wrapper.ERROR_MESSAGE);
+    public static <E> Result<E> error() {
+        return wrap(Result.ERROR_CODE, Result.ERROR_MESSAGE);
     }
 
     /**
@@ -130,8 +130,8 @@ public class WrapMapper {
      *            the element type
      * @return the wrapper< e>
      */
-    public static <E> Wrapper<E> ok() {
-        return new Wrapper<E>();
+    public static <E> Result<E> ok() {
+        return new Result<E>();
     }
 
 }

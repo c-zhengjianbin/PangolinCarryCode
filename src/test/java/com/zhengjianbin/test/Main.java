@@ -23,7 +23,13 @@ public class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException, TemplateException, InterruptedException, InvalidConfigurationException, XMLParserException {
 
 
-        //生成Model、Service、Impl 类
+        /*
+         *   生成Model、Service、Impl、Controller 类，我们需要哪些操作？
+         *   数据库: 1. 修改数据库连接，修改数据库名称
+         *          2. 初始化TableName。
+         *   Package: 1.修改Model 、Service、Impl、Controller 的packageName.
+         */
+
         generateJavaCode();
     }
 
@@ -44,20 +50,20 @@ public class Main {
 
     private static void generateJavaCode() throws ClassNotFoundException, SQLException, TemplateException, IOException {
         String templateDirPath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/template/";
-        String outCodeFilePath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/generatefile";
-        String mysqlUri = "jdbc:mysql://localhost:3306/risk-management";
+       // String outCodeFilePath = "/Users/zhengjianbin/IdeaProjects/PangolinCarryCode/src/main/java/com/zhengjianbin/generatecode/generatefile";
+        String outCodeFilePath = "/Users/zhengjianbin/Desktop/autocode/product";
+        String mysqlUri = "jdbc:mysql://localhost:3306/jifang";
         String mysqlUserName = "root";
         String mysqlPwd = "123456789";
         //connect mysql
         MySQLConnect mySQLConnect = new MySQLConnect(mysqlUri, mysqlUserName, mysqlPwd);
         //generate code
         CodeGenerator generateCode = new CodeGenerator(templateDirPath, outCodeFilePath);
-
-        generateCode(mySQLConnect, generateCode);
+        String tableName = "jifang_dict_file";
+        generateCode(mySQLConnect, generateCode, tableName);
     }
 
-    private static void generateCode(MySQLConnect mySQLConnect, CodeGenerator generateCode) throws SQLException, ClassNotFoundException, IOException, TemplateException {
-        String tableName = "admin_user";
+    private static void generateCode(MySQLConnect mySQLConnect, CodeGenerator generateCode, String tableName) throws SQLException, ClassNotFoundException, IOException, TemplateException {
         String className = StrUtils.tableConvertJavaClassName(tableName);
         Map<Object, Object> dbTableFieldInfo = mySQLConnect.getField(tableName);
         //table field convert java field

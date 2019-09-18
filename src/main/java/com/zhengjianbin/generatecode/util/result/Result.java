@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by zhengjianbin on 2019/7/31.
  */
-public class Wrapper<T> implements Serializable {
+public class Result<T> implements Serializable {
 
     /**
      * 成功码.
@@ -79,7 +79,7 @@ public class Wrapper<T> implements Serializable {
         return tempField;
     }
 
-    public Wrapper setTempField(JSONObject tempField) {
+    public Result setTempField(JSONObject tempField) {
         this.tempField = tempField;
         return this;
     }
@@ -87,7 +87,7 @@ public class Wrapper<T> implements Serializable {
     /**
      * Instantiates a new wrapper. default code=200
      */
-    public Wrapper() {
+    public Result() {
         this(SUCCESS_CODE, SUCCESS_MESSAGE);
     }
 
@@ -97,7 +97,7 @@ public class Wrapper<T> implements Serializable {
      * @param code    the code
      * @param message the message
      */
-    public Wrapper(int code, String message) {
+    public Result(int code, String message) {
         this.code(code).message(message);
     }
 
@@ -108,7 +108,7 @@ public class Wrapper<T> implements Serializable {
      * @param message the message
      * @param result  the result
      */
-    public Wrapper(int code, String message, T result) {
+    public Result(int code, String message, T result) {
         super();
         this.code(code).message(message).result(result);
     }
@@ -120,7 +120,7 @@ public class Wrapper<T> implements Serializable {
      * @param message the message
      * @param result  the result
      */
-    public Wrapper(int code, String message, T result, Page<T> page) {
+    public Result(int code, String message, T result, Page<T> page) {
         super();
         this.code(code).message(message).result(result);
     }
@@ -185,7 +185,7 @@ public class Wrapper<T> implements Serializable {
      * @param code the new 编号
      * @return the wrapper
      */
-    public Wrapper<T> code(int code) {
+    public Result<T> code(int code) {
         this.setCode(code);
         return this;
     }
@@ -196,7 +196,7 @@ public class Wrapper<T> implements Serializable {
      * @param message the new 信息
      * @return the wrapper
      */
-    public Wrapper<T> message(String message) {
+    public Result<T> message(String message) {
         this.setMessage(message);
         return this;
     }
@@ -207,19 +207,19 @@ public class Wrapper<T> implements Serializable {
      * @param result the new 结果数据
      * @return the wrapper
      */
-    public Wrapper<T> result(T result) {
+    public Result<T> result(T result) {
         this.setResult(result);
         return this;
     }
 
     @JsonIgnore
     public boolean isSuccess() {
-        return Wrapper.SUCCESS_CODE == this.code;
+        return Result.SUCCESS_CODE == this.code;
     }
 
     @JsonIgnore
     public boolean isFail() {
-        return Wrapper.SUCCESS_CODE != this.code;
+        return Result.SUCCESS_CODE != this.code;
     }
 
     @Override

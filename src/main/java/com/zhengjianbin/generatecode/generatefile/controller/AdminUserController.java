@@ -15,57 +15,57 @@ public class AdminUserController {
     private AdminUserService adminUserService;
 
     @GetMapping(value = "/getById")
-    public Wrapper getById(@RequestParam(value = "id") Integer id) {
+    public Result getById(@RequestParam(value = "id") Integer id) {
         try {
             adminUserService.getOneById(id);
         } catch (Exception e) {
             e.printStackTrace();
-            return WrapMapper.wrap(Wrapper.ERROR_CODE, e.getMessage());
+            return ResultWrap.wrap(Result.ERROR_CODE, e.getMessage());
         }
-        return WrapMapper.ok();
+        return ResultWrap.ok();
     }
 
     @PostMapping(value = "/add")
-    public Wrapper add(@RequestBody AdminUser adminUser) {
+    public Result add(@RequestBody AdminUser adminUser) {
         try {
             adminUserService.save(adminUser);
         } catch (Exception e) {
             e.printStackTrace();
-            return WrapMapper.wrap(Wrapper.ERROR_CODE, e.getMessage());
+            return ResultWrap.wrap(Result.ERROR_CODE, e.getMessage());
         }
-        return WrapMapper.ok();
+        return ResultWrap.ok();
     }
 
     @PostMapping(value = "/modify")
-    public Wrapper modify(@RequestBody AdminUser adminUser) {
+    public Result modify(@RequestBody AdminUser adminUser) {
         try {
             adminUserService.modify(adminUser);
         } catch (Exception e) {
             e.printStackTrace();
-            return WrapMapper.wrap(Wrapper.ERROR_CODE, e.getMessage());
+            return ResultWrap.wrap(Result.ERROR_CODE, e.getMessage());
         }
-        return WrapMapper.ok();
+        return ResultWrap.ok();
     }
 
     @PostMapping(value = "/delete")
-    public Wrapper delete(@RequestParam(value = "id") Integer id) {
+    public Result delete(@RequestParam(value = "id") Integer id) {
         try {
             adminUserService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
-            return WrapMapper.wrap(Wrapper.ERROR_CODE, e.getMessage());
+            return ResultWrap.wrap(Result.ERROR_CODE, e.getMessage());
         }
-        return WrapMapper.ok();
+        return ResultWrap.ok();
     }
 
     @PostMapping(value = "/query")
-    public Wrapper queryUser(@RequestBody(required = false) AdminUser adminUser) {
+    public Result queryUser(@RequestBody(required = false) AdminUser adminUser) {
         try {
             PageInfo<AdminUser> pageInfo =new PageInfo<>(adminUserService.listObjects(adminUser));
-            return WrapMapper.wrap(Wrapper.SUCCESS_CODE, Wrapper.SUCCESS_MESSAGE, pageInfo);
+            return ResultWrap.wrap(Result.SUCCESS_CODE, Result.SUCCESS_MESSAGE, pageInfo);
         } catch (Exception e) {
             e.printStackTrace();
-            return WrapMapper.wrap(Wrapper.ERROR_CODE, e.getMessage());
+            return ResultWrap.wrap(Result.ERROR_CODE, e.getMessage());
         }
     }
 

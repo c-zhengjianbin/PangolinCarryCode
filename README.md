@@ -15,15 +15,16 @@
          * 依据MySQL 对应的数据表，一键生成Mapper.xml、MapperInterface.java 文件。（2019.9.14 完成）
          * 依据MySQL 对应的数据表，将Mybatis Mapper、MapperInterface与Model、Service、Impl、Controller整合到一起。（进行中...）
          
-* ### ☘️使用方式(正在完善中......)     
-     
+* ### ☘️使用方式(正在完善中......)
      
 * ### ☘️TODO🌴  
-     * 完成Dto、Service、Impl、Controller 模板以及代码生成编写与测试。(2019.9.16 完成)
-     * 该用Free Marker方式，生成JavaDto。而不是使用Mybatis 插件。(进行中...)
-     * 对于路径错误进行相关测试。(进行中...)
-     * 完成从Mapper、MapperInterface、Dto、Service、Impl整体流程的测试。(进行中...)
-     * 完成使用方式的文档编写。(进行中...)
+     * 1.完成Dto、Service、Impl、Controller 模板以及代码生成编写与测试。(2019.9.16 完成)
+     * 2.对于Dto、Service、Impl、Controller 增加灵活的文件输出路径，并保证各类的调用Package 无错误。避免文件生成后，需要手动将文件拷贝到项目中。(进行中...)
+     * 3.该用Free Marker方式，生成JavaDto。而不是使用Mybatis 插件。(进行中...)
+     * 4.对于路径错误进行相关测试。(进行中...)
+     * 5.完成从Mapper、MapperInterface、Dto、Service、Impl整体流程的测试。(进行中...)
+     * 6.完成使用方式的文档编写。(进行中...)
+     * 7.将所有的配置提取，使用Properties 属性进行使用。(进行中...)
      
 * ### ☘️项目结构
      * 项目结构与包名注释🌴

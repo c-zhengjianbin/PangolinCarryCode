@@ -21,13 +21,22 @@ public class Constants {
 
     public static final String TEMPLATE_CONTROLLER_FILE_NAME = "Controller.ftl";
 
-    public static final String MODEL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.model";
+    //public static final String MODEL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.model";
 
-    public static final String SERVICE_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.service";
+    public static final String MODEL_BEAN_PACKAGE_NAME =  "com.elensdata.jifang.entity";
 
-    public static final String SERVICE_IMPL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.service.impl";
 
-    public static final String CONTROLLER_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.controller";
+  //  public static final String SERVICE_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.service";
+
+    public static final String SERVICE_BEAN_PACKAGE_NAME =  "com.elensdata.jifang.service";
+
+ //   public static final String SERVICE_IMPL_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.service.impl";
+
+    public static final String SERVICE_IMPL_BEAN_PACKAGE_NAME =  "com.elensdata.jifang.service.impl";
+
+    //public static final String CONTROLLER_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.generatefile.controller";
+
+    public static final String CONTROLLER_BEAN_PACKAGE_NAME =  "com.elensdata.jifang.controller";
 
     public static final String WRAPPER_BEAN_PACKAGE_NAME =  "com.zhengjianbin.generatecode.util.result.*";
 
