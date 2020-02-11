@@ -16,7 +16,6 @@ public class MySQLConnect {
     private String pwd;
     private Map<String,String> classTypeMap = new HashMap<>();
 
-
     public MySQLConnect(String uri, String userName, String pwd) {
         this.uri = uri;
         this.userName = userName;
@@ -25,6 +24,7 @@ public class MySQLConnect {
         classTypeMap.put("java.lang.String", "String");
         classTypeMap.put("java.sql.Timestamp", "Date");
         classTypeMap.put("java.lang.Long", "Long");
+        classTypeMap.put("java.lang.Boolean", "Integer");
     }
 
     public Connection getConn() throws SQLException, ClassNotFoundException {
@@ -62,6 +62,7 @@ public class MySQLConnect {
                 Map<String, String> field = new HashMap<>();
                 String columnName = data.getColumnName(i);
                 String columnClassName = data.getColumnClassName(i);
+                System.out.println("columnName:"+columnName+"columnClassName:"+columnClassName);
                 if(columnName.equals(primaryKeyColumns)){
                     primaryKeyType = classTypeMap.get(columnClassName);
                 }
