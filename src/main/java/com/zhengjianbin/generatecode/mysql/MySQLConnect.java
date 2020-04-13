@@ -25,6 +25,7 @@ public class MySQLConnect {
         classTypeMap.put("java.sql.Timestamp", "Date");
         classTypeMap.put("java.lang.Long", "Long");
         classTypeMap.put("java.lang.Boolean", "Integer");
+        classTypeMap.put("java.lang.Double", "Double");
     }
 
     public Connection getConn() throws SQLException, ClassNotFoundException {

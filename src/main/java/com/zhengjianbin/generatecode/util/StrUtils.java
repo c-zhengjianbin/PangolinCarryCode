@@ -15,15 +15,19 @@ public class StrUtils {
      * @function : 将Mysql 表名转换为Java 类名，例如：admin_user convert AdminUser
      */
     public static String tableConvertJavaClassName(String tableName){
-        if(!tableName.contains("_")){
-            throw new PangolinCarryException("Mysql 表名格式错误:"+tableName);
-        }
-        String[] split = tableName.split("_");
+        System.currentTimeMillis();
         StringBuilder stringBuilder = new StringBuilder();
-        for(String splitStr : split){
-            char[] chars = splitStr.toCharArray();
-            chars[0] = Character.toUpperCase(splitStr.charAt(0));
+        if(!tableName.contains("_")){
+            char[] chars = tableName.toCharArray();
+            chars[0] = Character.toUpperCase(tableName.charAt(0));
             stringBuilder.append(chars);
+        }else{
+            String[] split = tableName.split("_");
+            for(String splitStr : split){
+                char[] chars = splitStr.toCharArray();
+                chars[0] = Character.toUpperCase(splitStr.charAt(0));
+                stringBuilder.append(chars);
+            }
         }
         return stringBuilder.toString();
     }
